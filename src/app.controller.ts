@@ -6,7 +6,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @Render('index')
+  @Render('newsfeed')
   root() {
     return this.appService.getIndexPage();
   }

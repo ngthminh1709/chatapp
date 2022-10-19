@@ -5,26 +5,32 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  Redirect,
   Render,
   Req,
   Res,
+  UseGuards,
+  UseFilters,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { LoginUserDto, RegisterUserDto } from '../dtos/user.dto';
+import { AuthFilter } from '../filters/auth.filters';
+import { AuthGuard } from '../guards/auth.guard';
 import { AuthService } from '../services/auth.service';
-
 @Controller('/auth')
+@UseGuards(AuthGuard)
+@UseFilters(AuthFilter)
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Get('/register')
-  @Render('auth/register')
+  @Render('register')
   root() {
     return this.authService.registerPage();
   }
 
   @Get('/login')
-  @Render('auth/login')
+  @Render('login')
   loginPage() {
     return this.authService.loginPage();
   }
