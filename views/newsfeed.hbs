@@ -774,11 +774,11 @@
 					</ul>
 					<span class="seting-title">User setting <a href="#" title="">see all</a></span>
 					<ul class="log-out">
-						<li><a href="about.html" title=""><i class="ti-user"></i> view profile</a></li>
+						<li><a href="/user/about" title=""><i class="ti-user"></i> view profile</a></li>
 						<li><a href="setting.html" title=""><i class="ti-pencil-alt"></i>edit profile</a></li>
 						<li><a href="#" title=""><i class="ti-target"></i>activity log</a></li>
 						<li><a href="setting.html" title=""><i class="ti-settings"></i>account setting</a></li>
-						<li><a href="logout.html" title=""><i class="ti-power-off"></i>log out</a></li>
+						<li class="logout-btn" ><a href="#" title=""><i class="ti-power-off"></i>log out</a></li>
 					</ul>
 				</div>
 			</div>
@@ -3108,15 +3108,34 @@
 		</div>
 	</div><!-- send message popup -->	
 	
+	{{!-- <script src="js/newsfeed.js"></script> --}}
+	<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 	<script src="js/main.min.js"></script>
 	<script src="js/jquery-stories.js"></script>
 	<script src="../../../cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script>
 	<script src="js/locationpicker.jquery.js"></script>
-	<script src="js/map-init.js"></script>
+	<script src="js/map-init.js"></script>        
 	<script src="js/script.js"></script>
 	<script>
 		jQuery(document).ready(function($) {
+
+			const logoutBtn = document.querySelector('.logout-btn');
+			console.log(logoutBtn);
+			const handleLogout = () => {
+				axios({
+					url: 'http://localhost:3000/auth/logout',
+					method: 'POST'
+				}).then((data)=> {
+					console.log(data)
+					window.location.replace('http://localhost:3000/auth/logout')
+
+				}).catch((err)=> {
+					console.log(err)
+				})
+			}
+			logoutBtn.addEventListener("click", handleLogout);
+
 			
 			$('#us3').locationpicker({
 			  location: {

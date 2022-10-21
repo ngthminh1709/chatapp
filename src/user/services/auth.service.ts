@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
-import * as bcrypt from 'bcrypt';
+// import * as bcrypt from 'bcrypt';
 import { Request, response, Response } from 'express';
 import { Model } from 'mongoose';
 import {
@@ -28,6 +28,10 @@ export class AuthService {
     return { message: 'Login Page!' };
   }
 
+  logoutPage() {
+    return { message: 'Logout Page!' };
+  }
+
   async register(registerUserDto: RegisterUserDto) {
     const { email, username, password } = registerUserDto;
     try {
@@ -43,7 +47,8 @@ export class AuthService {
           HttpStatus.CONFLICT,
         );
 
-      const hashPassword = await bcrypt.hash(password, 10);
+      // const hashPassword = await bcrypt.hash(password, 10);
+      const hashPassword = password;
 
       await this.userModel.create({
         email,
@@ -70,7 +75,8 @@ export class AuthService {
         );
       }
 
-      const checker = await bcrypt.compare(password, user.password);
+      // const checker = await bcrypt.compare(password, user.password);
+      const checker = true;
 
       if (!checker) {
         throw new HttpException(

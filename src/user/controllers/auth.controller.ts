@@ -18,29 +18,39 @@ import { AuthFilter } from '../filters/auth.filters';
 import { AuthGuard } from '../guards/auth.guard';
 import { AuthService } from '../services/auth.service';
 @Controller('/auth')
-@UseGuards(AuthGuard)
 @UseFilters(AuthFilter)
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @UseGuards(AuthGuard)
   @Get('/register')
   @Render('register')
   root() {
     return this.authService.registerPage();
   }
 
+  @UseGuards(AuthGuard)
   @Get('/login')
   @Render('login')
   loginPage() {
     return this.authService.loginPage();
   }
 
+  @UseGuards(AuthGuard)
+  @Get('/logout')
+  @Render('logout')
+  logoutPage() {
+    return this.authService.logoutPage();
+  }
+
+  @UseGuards(AuthGuard)
   @Post('/register')
   @HttpCode(HttpStatus.CREATED)
   register(@Body() registerUserDto: RegisterUserDto) {
     return this.authService.register(registerUserDto);
   }
 
+  @UseGuards(AuthGuard)
   @Post('/login')
   @HttpCode(HttpStatus.OK)
   login(
